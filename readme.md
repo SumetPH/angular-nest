@@ -1,14 +1,14 @@
 ## Stack in Project
 
-- Front-end : Angular 19
-- CSS : Tailwind 4
+- Front-end : angular 19
+- CSS : tailwind 4
 - Tool :
 
 ---
 
-- Back-end : Nest 11
+- Back-end : nest 11
 - Tool :
-  - Knex
+  - knex
   - bcrypt
 
 ---
