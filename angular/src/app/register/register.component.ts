@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,27 @@ export class RegisterComponent {
   registerSubmit() {
     this.submitted = true;
     if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
+      this.register();
     }
+  }
+
+  async register() {
+    this.http
+      .post(`${environment.apiUrl}/auth/register`, {
+        name: this.registerForm.value.name,
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+        passwordConfirm: this.registerForm.value.passwordConfirm,
+      })
+      .subscribe({
+        next: (value) => {
+          alert('Register Success');
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error(err);
+          alert(err.error.message);
+        },
+      });
   }
 }

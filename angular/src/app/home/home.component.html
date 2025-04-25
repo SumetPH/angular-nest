@@ -1,1 +1,27 @@
-<p>home works!</p>
+<div class="container mx-auto p-10">
+  <h1 class="text-3xl font-bold text-center">Hello {{ userData.name }}</h1>
+  <br />
+  <div>
+    <section class="text-md font-bold text-center">Data From API</section>
+    <section class="text-md font-medium text-center">User ID : {{ userData.id }}</section>
+    <section class="text-md font-medium text-center">Email : {{ userData.email }}</section>
+  </div>
+  <br />
+  <hr />
+  <br />
+  <div>
+    <section class="text-md font-bold text-center">Data From Store</section>
+    <section class="text-md font-medium text-center">
+      User ID : {{ authStoreState?.userData?.id }}
+    </section>
+    <section class="text-md font-medium text-center">
+      Email : {{ authStoreState?.userData?.email }}
+    </section>
+  </div>
+  <br />
+  <hr />
+  <br />
+  <div class="flex justify-center">
+    <button class="underline cursor-pointer" (click)="logout()">Logout</button>
+  </div>
+</div>

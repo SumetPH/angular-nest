@@ -23,10 +23,6 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
-  ngOnInit() {
-    console.log('init');
-  }
-
   loginSubmit() {
     this.submitted = true;
     if (this.loginForm.valid) {

@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 import { DatabaseService } from 'src/database/database.service';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -27,7 +27,11 @@ export class AuthService {
         throw new HttpException('email already exists', 400);
       }
 
-      const passwordHash = await bcrypt.hash(data.password, 10);
+      if (data.password !== data.passwordConfirm) {
+        throw new HttpException('password and password confirm not match', 400);
+      }
+
+      const passwordHash = await bcryptjs.hash(data.password, 10);
 
       await this.db.knex('user').insert({
         name: data.name,
@@ -59,7 +63,7 @@ export class AuthService {
           name: string;
           email: string;
           password: string;
-          createdAt: string;
+          created_at: string;
         }>('user')
         .select('*')
         .where('email', data.email)
@@ -69,7 +73,10 @@ export class AuthService {
         throw new HttpException('user and password invalid', 400);
       }
 
-      const checkPassword = await bcrypt.compare(data.password, user.password);
+      const checkPassword = await bcryptjs.compare(
+        data.password,
+        user.password,
+      );
 
       if (!checkPassword) {
         throw new HttpException('user and password invalid', 400);
